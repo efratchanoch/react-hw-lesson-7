@@ -1,7 +1,10 @@
-import React from 'react'
+import React from "react";
+import "./GreetingCard.css";
 
-export default function GreetingCard() {
+export default function GreetingCard({ greeting }) {
   return (
-    <div>GreetingCard</div>
-  )
+    <div className="greeting-card">
+      {greeting}
+    </div>
+  );
 }
