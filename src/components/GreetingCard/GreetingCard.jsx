@@ -1,14 +1,17 @@
-import React from "react";
-import "./GreetingCard.css";
-import { useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { LanguageContext } from "../../LanguageContext.jsx";
 
 export default function GreetingCard({ greeting }) {
-    const { language } = useContext(LanguageContext);
+    const { translate, language } = useContext(LanguageContext);
+    const [translatedMessage, setTranslatedMessage] = useState("loading...");
+
+    useEffect(() => {
+        translate(greeting).then(setTranslatedMessage);
+    }, [greeting, language, translate]);
 
     return (
         <div className="greeting-card">
-            {greeting}
+            {translatedMessage}
         </div>
     );
 }

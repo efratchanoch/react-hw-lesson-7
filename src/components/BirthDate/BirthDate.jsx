@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { LanguageContext } from "../../LanguageContext.jsx";
 
 export default function BirthDate({ birthDate }) {
-    const { language } = useContext(LanguageContext);
-    
+    const { translate } = useContext(LanguageContext);
+    const [translatedMessage, setTranslatedMessage] = useState("loading...");
+
     const birth = new Date(birthDate);
 
     const getAge = (birth) => {
@@ -23,11 +25,11 @@ export default function BirthDate({ birthDate }) {
 
     const formattedDate = birth.toLocaleDateString("en-GB");
 
-    return (
-        <div>
-            <p>
-                מזל טוב! אתה בן {age}. תאריך הלידה שלך הוא: {formattedDate}
-            </p>
-        </div>
-    );
+    const message = `מזל טוב! אתה בן ${age}. תאריך הלידה שלך הוא: ${formattedDate}`;
+
+    useEffect(() => {
+        translate(message).then(setTranslatedMessage);
+    }, [message, translate]);
+
+    return <div>{translatedMessage}</div>;
 }
